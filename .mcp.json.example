@@ -11,9 +11,6 @@
         "TAPO_CAMERA_HOST": "192.168.1.xxx",
         "TAPO_USERNAME": "your-username",
         "TAPO_PASSWORD": "your-password",
-        "TAPO_STREAM_URL": "rtsp://user:pass@192.168.1.xxx:554/cam/realmonitor?channel=1&subtype=0",
-        "TAPO_ONVIF_PORT": "80",
-        "TAPO_PTZ_MODE": "continuous"
       }
     },
     "desire-system": {
