@@ -1,0 +1,30 @@
+## Just2enough fork ローカルの osv-scanner 設定
+##
+## このファイルは fork ローカルでの脆弱性許容方針を明示する。
+## 各エントリには受容の根拠と発火条件を必ず記載する。
+##
+## 詳細監査: docs/local/SECURITY_AUDIT_2026-05-24.md §8.4
+## 運用方針: CLAUDE.local.md §5 / docs/local/MCP_USAGE_POLICY.md
+##
+## 追加・削除する際は SECURITY_AUDIT §8.4 と CLAUDE.local.md §5 も同期更新すること。
+
+[[IgnoredVulns]]
+id = "PYSEC-2025-217"
+# transformers 4.57.6: checkpoint deserialization RCE。fix リリースなし（5.0.0rc3 は RC）。
+# 影響範囲: memory-mcp / sociality-mcp / sociality-mcp/packages/{boundary,interaction-orchestrator}-mcp
+# 発火条件: from_pretrained() で外部 checkpoint を読む場合のみ。本フォークでは
+# Hugging Face Hub 公式モデル（all-MiniLM-L6-v2 等）のみ使う運用で発火しない。
+reason = "Hugging Face Hub 公式モデルのみ使用する運用で発火しない。fix リリースなし。詳細: SECURITY_AUDIT §8.4 / CLAUDE.local.md §5"
+
+[[IgnoredVulns]]
+id = "GHSA-69w3-r845-3855"
+# transformers 4.57.6: fix は 5.0.0rc3。RC 版を production に投入する判断を保留。
+# 5.0 GA リリース後に upgrade 再評価。
+reason = "fix は transformers 5.0.0rc3 (RC 版)。5.0 GA リリース後に upgrade 再評価。詳細: SECURITY_AUDIT §8.4"
+
+[[IgnoredVulns]]
+id = "GHSA-3p6v-hrg8-8qj7"
+# @mozilla/readability 0.5.0: CVSS 2.9 Low。bun.lock。
+# fork 元作者の Claude Code カスタムスキル `read` 用。本フォークで使うかは未決。
+# 使う段階で bun update して 0.6.0+ に上げる。
+reason = "CVSS 2.9 Low。read カスタムスキルを使うかが未決のため放置。使う段階で bun update。詳細: SECURITY_AUDIT §8.4"

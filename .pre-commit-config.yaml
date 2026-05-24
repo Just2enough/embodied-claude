@@ -7,7 +7,8 @@ repos:
     hooks:
       - id: osv-scanner
         name: osv-scanner (依存関係 脆弱性スキャン)
-        entry: osv-scanner -r .
+        # --config で fork-local の許容 vuln リスト (.osv-scanner.toml) を全 lockfile に適用
+        entry: osv-scanner -r . --config .osv-scanner.toml
         language: system
         pass_filenames: false
         files: ^(.*package-lock\.json|.*Cargo\.lock|.*requirements.*\.txt|.*poetry\.lock|.*pnpm-lock\.yaml|.*yarn\.lock|.*composer\.lock|.*Pipfile\.lock|.*go\.sum|.*Gemfile\.lock|.*uv\.lock|.*pylock\.toml|.*pdm\.lock|.*bun\.lock)$
