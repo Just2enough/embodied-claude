@@ -1,0 +1,27 @@
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+  - repo: local
+    hooks:
+      - id: osv-scanner
+        name: osv-scanner (依存関係 脆弱性スキャン)
+        entry: osv-scanner -r .
+        language: system
+        pass_filenames: false
+        files: ^(.*package-lock\.json|.*Cargo\.lock|.*requirements.*\.txt|.*poetry\.lock|.*pnpm-lock\.yaml|.*yarn\.lock|.*composer\.lock|.*Pipfile\.lock|.*go\.sum|.*Gemfile\.lock|.*uv\.lock|.*pylock\.toml|.*pdm\.lock|.*bun\.lock)$
+      - id: gitleaks-prepush
+        name: gitleaks (pre-push, default rules, push range scan)
+        entry: pwsh -NoProfile -ExecutionPolicy Bypass -Command "& \"$env:USERPROFILE/.gitleaks-hooks/gitleaks_prepush.ps1\" -Mode default"
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+        always_run: true
+      - id: gitleaks-prepush-personal
+        name: gitleaks (pre-push, personal rules, push range scan)
+        entry: pwsh -NoProfile -ExecutionPolicy Bypass -Command "& \"$env:USERPROFILE/.gitleaks-hooks/gitleaks_prepush.ps1\" -Mode personal"
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+        always_run: true
